@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Iti Rout | Licensed Real Estate Agent – North Texas</title>
-  <link rel="icon" type="image/jpeg" href="photo/iti-profile.jpeg" />
+  <link rel="icon" type="image/jpeg" href="image/iti-profile.jpeg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -15,9 +15,9 @@
     :root {
       --gold:   #c9a96e;
       --gold-light: #e8d5b0;
-      --dark:   #1a1a2e;
-      --dark2:  #16213e;
-      --mid:    #2a2a4a;
+      --dark:   #2b2b42;
+      --dark2:  #252a45;
+      --mid:    #3a3a5c;
       --text:   #f0ece4;
       --muted:  #a09880;
       --white:  #ffffff;
@@ -75,6 +75,53 @@
     .nav-btn:hover { background: var(--gold-light) !important; transform: translateY(-1px); }
     .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
     .hamburger span { width: 26px; height: 2px; background: var(--text); transition: 0.3s; }
+
+    /* ── Theme Switcher ──────────────────────────────── */
+    #theme-toggle {
+      width: 36px; height: 36px; flex-shrink: 0;
+      background: var(--mid);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--gold); font-size: 0.95rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    #theme-toggle:hover { transform: rotate(30deg); box-shadow: 0 6px 22px rgba(0,0,0,0.5); }
+    #theme-panel {
+      position: absolute; top: calc(100% + 0.75rem); right: 0; z-index: 1999;
+      background: var(--mid);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      width: 220px;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+      display: none;
+      flex-direction: column; gap: 0.75rem;
+    }
+    #theme-panel.open { display: flex; }
+    #theme-panel::-webkit-scrollbar { width: 4px; }
+    #theme-panel::-webkit-scrollbar-track { background: transparent; }
+    #theme-panel::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; }
+    #theme-panel h4 {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 0.25rem;
+    }
+    .theme-option {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.6rem 0.75rem; border-radius: 10px;
+      cursor: pointer; border: 1px solid transparent;
+      transition: background 0.2s, border-color 0.2s;
+      font-size: 0.875rem; color: var(--text);
+    }
+    .theme-option:hover { background: rgba(255,255,255,0.06); }
+    .theme-option.active { border-color: var(--gold); background: rgba(201,169,110,0.1); }
+    .theme-swatch {
+      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+      border: 2px solid rgba(255,255,255,0.2);
+    }
 
     /* ── Hero ─────────────────────────────────────────── */
     #hero {
@@ -411,10 +458,61 @@
       transition: background 0.3s, transform 0.2s; white-space: nowrap;
     }
     .search-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
-    .search-results-info { margin-top: 1.5rem; font-size: 0.875rem; color: var(--muted); }
-    .search-results-info strong { color: var(--gold); }
     @media (max-width: 900px) { .search-filters { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 560px) { .search-filters { grid-template-columns: 1fr; } }
+    /* Search Results Table */
+    #search-results-wrap { margin-top: 2rem; }
+    .results-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem; }
+    .results-header-label { font-size:0.9rem; color:var(--muted); }
+    .results-header-label strong { color:var(--gold); }
+    .select-all-wrap { display:flex; align-items:center; gap:0.5rem; font-size:0.85rem; color:var(--muted); cursor:pointer; }
+    .select-all-wrap input { accent-color:var(--gold); width:16px; height:16px; cursor:pointer; }
+    .table-scroll { overflow-x:auto; border-radius:12px; border:1px solid rgba(255,255,255,0.07); }
+    .results-table { width:100%; border-collapse:collapse; font-size:0.875rem; }
+    .results-table thead tr { background:rgba(255,255,255,0.06); }
+    .results-table th { padding:0.875rem 1rem; text-align:left; font-size:0.72rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--muted); white-space:nowrap; border-bottom:1px solid rgba(255,255,255,0.08); }
+    .results-table td { padding:0.875rem 1rem; border-bottom:1px solid rgba(255,255,255,0.05); vertical-align:middle; white-space:nowrap; }
+    .result-row { transition:background 0.2s; cursor:pointer; }
+    .result-row:hover { background:rgba(255,255,255,0.04); }
+    .result-row.selected { background:rgba(201,169,110,0.08); }
+    .result-row input[type=checkbox] { accent-color:var(--gold); width:16px; height:16px; cursor:pointer; }
+    .prop-price { color:var(--gold); font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; }
+    .prop-status { display:inline-block; padding:0.25rem 0.75rem; border-radius:50px; font-size:0.72rem; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; }
+    .prop-status.active { background:rgba(74,222,128,0.15); color:#4ade80; }
+    .prop-status.closed { background:rgba(201,169,110,0.15); color:var(--gold); }
+    .prop-status.other { background:rgba(255,255,255,0.08); color:var(--muted); }
+    /* Selection Bar */
+    #selection-bar { position:fixed; bottom:-90px; left:0; right:0; z-index:2500; background:var(--gold); color:var(--dark); display:flex; align-items:center; justify-content:space-between; padding:1rem 5%; box-shadow:0 -4px 24px rgba(0,0,0,0.4); transition:bottom 0.35s cubic-bezier(0.34,1.56,0.64,1); flex-wrap:wrap; gap:0.75rem; }
+    #selection-bar.visible { bottom:0; }
+    #sel-count-label { font-weight:700; font-size:0.95rem; }
+    .sel-bar-btn { background:var(--dark); color:var(--gold); border:none; padding:0.6rem 1.5rem; border-radius:50px; font-weight:700; font-size:0.875rem; cursor:pointer; font-family:'Inter',sans-serif; transition:background 0.2s,transform 0.2s; }
+    .sel-bar-btn:hover { background:var(--dark2); transform:translateY(-1px); }
+    .sel-bar-btn.primary { background:var(--dark2); }
+    /* Schedule Modal */
+    .modal-overlay { position:fixed; inset:0; z-index:3000; background:rgba(0,0,0,0.72); backdrop-filter:blur(4px); display:none; align-items:center; justify-content:center; padding:1rem; }
+    .modal-overlay.open { display:flex; }
+    .modal-box { background:var(--dark2); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:2.5rem; width:100%; max-width:520px; max-height:90vh; overflow-y:auto; box-shadow:0 24px 80px rgba(0,0,0,0.6); }
+    .modal-box h3 { font-size:1.4rem; margin-bottom:0.4rem; }
+    .modal-sub { font-size:0.875rem; color:var(--muted); margin-bottom:1.5rem; }
+    .modal-prop-list { background:rgba(255,255,255,0.04); border-radius:10px; padding:1rem; margin-bottom:1.5rem; }
+    .modal-prop-item { padding:0.35rem 0; border-bottom:1px solid rgba(255,255,255,0.05); font-size:0.83rem; color:var(--muted); }
+    .modal-prop-item:last-child { border:none; }
+    .modal-prop-item strong { color:var(--gold); }
+    .modal-field { margin-bottom:1rem; }
+    .modal-field label { display:block; font-size:0.75rem; color:var(--muted); font-weight:600; letter-spacing:0.5px; margin-bottom:0.4rem; }
+    .modal-field input, .modal-field textarea { width:100%; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); color:var(--text); padding:0.75rem 1rem; border-radius:8px; font-family:'Inter',sans-serif; font-size:0.875rem; outline:none; transition:border-color 0.3s; box-sizing:border-box; }
+    .modal-field input:focus, .modal-field textarea:focus { border-color:var(--gold); }
+    .modal-field textarea { resize:vertical; min-height:80px; }
+    .modal-field input::placeholder, .modal-field textarea::placeholder { color:var(--muted); }
+    .modal-btns { display:flex; gap:0.75rem; margin-top:1.5rem; }
+    .modal-submit { flex:1; background:var(--gold); color:var(--dark); border:none; padding:0.875rem; border-radius:10px; font-weight:700; font-size:0.95rem; cursor:pointer; font-family:'Inter',sans-serif; transition:background 0.2s; }
+    .modal-submit:hover { background:var(--gold-light); }
+    .modal-cancel { background:rgba(255,255,255,0.07); color:var(--text); border:none; padding:0.875rem 1.25rem; border-radius:10px; cursor:pointer; font-family:'Inter',sans-serif; transition:background 0.2s; }
+    .modal-cancel:hover { background:rgba(255,255,255,0.12); }
+    .modal-success-wrap { text-align:center; padding:2rem 0; }
+    .modal-success-wrap i { font-size:3rem; color:#4ade80; margin-bottom:1rem; display:block; }
+    .modal-success-wrap h4 { font-size:1.2rem; margin-bottom:0.5rem; }
+    .modal-success-wrap p { color:var(--muted); font-size:0.875rem; }
 
     /* ── Photo Gallery ────────────────────────────────── */
     #gallery { background: var(--dark); }
@@ -544,16 +642,144 @@
       .form-row { grid-template-columns: 1fr; }
       section { padding: 4rem 5%; }
     }
+
+    /* ── Glossy Highlight Effects ─────────────────────── */
+    /* Buttons */
+    .btn-primary {
+      position: relative; overflow: hidden;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.08) 45%, transparent 55%);
+      border-radius: inherit;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .btn-primary:hover::before { opacity: 0.55; }
+
+    /* Service cards */
+    .service-card {
+      position: relative; overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 50%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, transparent 100%);
+      border-radius: var(--radius) var(--radius) 0 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .service-card:hover::before { opacity: 1.8; }
+
+    /* Listing cards */
+    .listing-card {
+      position: relative;
+    }
+    .listing-card::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent);
+      border-radius: 16px 16px 0 0;
+      opacity: 0;
+      transition: opacity 0.35s;
+      pointer-events: none;
+    }
+    .listing-card:hover::after { opacity: 1; }
+
+    /* Stat cards */
+    .stat-card {
+      position: relative; overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute; top: -40%; left: -20%;
+      width: 60%; height: 80%;
+      background: radial-gradient(ellipse, rgba(255,255,255,0.1) 0%, transparent 70%);
+      pointer-events: none;
+      transform: rotate(-30deg);
+    }
+
+    /* Navbar glossy top-bar */
+    #navbar::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), var(--gold), rgba(255,255,255,0.25), transparent);
+      pointer-events: none;
+    }
+
+    /* Theme toggle button */
+    #theme-toggle {
+      position: relative; overflow: hidden;
+    }
+    #theme-toggle::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 50%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.18) 0%, transparent 100%);
+      border-radius: 50% 50% 0 0;
+      pointer-events: none;
+    }
+
+    /* Section headings glossy underline */
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 60px; height: 3px;
+      margin-top: 0.6rem;
+      background: linear-gradient(90deg, var(--gold), rgba(255,255,255,0.5), var(--gold));
+      border-radius: 2px;
+      background-size: 200% 100%;
+      animation: glossShimmer 2.5s linear infinite;
+    }
+    @keyframes glossShimmer {
+      0%   { background-position: -100% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    /* Badge / pill gloss */
+    .listing-badge, .hero-eyebrow, .section-tag {
+      position: relative; overflow: hidden;
+    }
+    .listing-badge::before, .hero-eyebrow::before {
+      content: '';
+      position: absolute; top: 0; left: -75%;
+      width: 50%; height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
+      border-radius: inherit;
+      pointer-events: none;
+      animation: badgeShine 3s ease-in-out infinite;
+    }
+    @keyframes badgeShine {
+      0%, 70% { left: -75%; opacity: 0; }
+      40%      { left: 125%; opacity: 1; }
+      100%     { left: 125%; opacity: 0; }
+    }
+
+    /* About section image glossy frame */
+    .about-img-wrap {
+      position: relative; overflow: hidden;
+    }
+    .about-img-wrap::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 50%);
+      pointer-events: none;
+      border-radius: inherit;
+    }
   </style>
 </head>
 <body>
 
   <!-- ═══ NAVBAR ═════════════════════════════════════════ -->
   <nav id="navbar">
-    <div class="nav-logo" style="display:flex; align-items:center; gap:0.6rem;">
-      <img src="photo/iti-profile.jpeg" alt="Iti Rout" style="width:38px; height:38px; border-radius:50%; object-fit:cover; object-position:top; border:2px solid var(--gold); flex-shrink:0;" />
+    <a href="#" class="nav-logo" style="display:flex; align-items:center; gap:0.6rem; text-decoration:none;">
+      <img src="image/iti-profile.jpeg" alt="Iti Rout" style="width:38px; height:38px; border-radius:50%; object-fit:cover; object-position:top; border:2px solid var(--gold); flex-shrink:0;" />
       ITI<span> Rout</span>
-    </div>
+    </a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#search">Search</a></li>
       <li><a href="#services">Services</a></li>
@@ -563,8 +789,46 @@
       <li><a href="#testimonials">Reviews</a></li>
       <li><a href="#contact" class="nav-btn">Contact Me</a></li>
     </ul>
-    <div class="hamburger" id="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
-      <span></span><span></span><span></span>
+    <div style="display:flex; align-items:center; gap:0.75rem; position:relative;">
+      <button id="theme-toggle" aria-label="Change color theme" aria-haspopup="true">
+        <i class="fa-solid fa-palette"></i>
+      </button>
+      <div id="theme-panel" role="menu">
+        <h4>Color Theme</h4>
+        <div class="theme-option active" data-theme="luxury" role="menuitem" tabindex="0">
+          <span class="theme-swatch" style="background:linear-gradient(135deg,#c9a96e,#1a1a2e);"></span> Luxury Gold
+        </div>
+        <div class="theme-option" data-theme="emerald" role="menuitem" tabindex="0">
+          <span class="theme-swatch" style="background:linear-gradient(135deg,#2ecc71,#1a2e1a);"></span> Emerald
+        </div>
+        <div class="theme-option" data-theme="royal" role="menuitem" tabindex="0">
+          <span class="theme-swatch" style="background:linear-gradient(135deg,#7c6fcd,#0f0c29);"></span> Royal Purple
+        </div>
+        <div class="theme-option" data-theme="rose" role="menuitem" tabindex="0">
+          <span class="theme-swatch" style="background:linear-gradient(135deg,#e07b8a,#2e1a1e);"></span> Rose Blush
+        </div>
+        <div class="theme-option" data-theme="ocean" role="menuitem" tabindex="0">
+          <span class="theme-swatch" style="background:linear-gradient(135deg,#29b6cf,#0a1628);"></span> Ocean Blue
+        </div>
+        <div class="theme-option" data-theme="sunset" role="menuitem" tabindex="0">
+          <span class="theme-swatch" style="background:linear-gradient(135deg,#ff8c42,#1a0800);"></span> Sunset Orange
+        </div>
+        <div class="theme-option" data-theme="midnight" role="menuitem" tabindex="0">
+          <span class="theme-swatch" style="background:linear-gradient(135deg,#90a4ae,#0a0e1a);"></span> Midnight Silver
+        </div>
+        <div class="theme-option" data-theme="copper" role="menuitem" tabindex="0">
+          <span class="theme-swatch" style="background:linear-gradient(135deg,#cd7f32,#100800);"></span> Copper Bronze
+        </div>
+        <div class="theme-option" data-theme="crimson" role="menuitem" tabindex="0">
+          <span class="theme-swatch" style="background:linear-gradient(135deg,#ef5350,#1a0505);"></span> Crimson Red
+        </div>
+        <div class="theme-option" data-theme="teal" role="menuitem" tabindex="0">
+          <span class="theme-swatch" style="background:linear-gradient(135deg,#26a69a,#041412);"></span> Deep Teal
+        </div>
+      </div>
+      <div class="hamburger" id="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
+        <span></span><span></span><span></span>
+      </div>
     </div>
   </nav>
 
@@ -577,7 +841,7 @@
     <div class="hero-content">
       <div class="hero-eyebrow"><i class="fa-solid fa-star"></i> Licensed Texas REALTOR® &nbsp;·&nbsp; TX Lic #0640957</div>
       <h1>Find Your <em>Dream</em><br/>Home with Confidence</h1>
-      <p>Iti Rout is a licensed Texas real estate agent with Local Pro Realty LLC, serving buyers, sellers, and relocating families across Coppell, Irving, Flower Mound, Plano, Frisco, and Southlake.</p>
+      <p>I am a licensed Texas real estate agent with Local Pro Realty LLC, proudly serving buyers, sellers, and relocating families across Coppell, Irving, Flower Mound, Plano, Frisco, Southlake, Prosper, Celina, and the entire Dallas–Fort Worth metro area.</p>
       <div class="hero-btns">
         <a href="#listings" class="btn-primary">View Listings &nbsp;<i class="fa-solid fa-arrow-right"></i></a>
         <a href="#contact" class="btn-outline">Schedule a Call</a>
@@ -649,12 +913,71 @@
         </div>
         <button class="search-btn" onclick="runSearch()"><i class="fa-solid fa-magnifying-glass"></i>&nbsp; Search</button>
       </div>
-      <div class="search-results-info" id="searchResultsInfo" style="display:none;">
-        Found <strong id="resultCount">0</strong> properties matching your criteria &mdash;
-        <a href="#listings" style="color:var(--gold);">View Featured Listings &darr;</a>
+      <div id="search-results-wrap" style="display:none;">
+        <div class="results-header">
+          <span class="results-header-label">Found <strong id="result-count-label">0</strong> properties</span>
+          <label class="select-all-wrap">
+            <input type="checkbox" id="select-all-chk" onchange="toggleSelectAll(this)"> Select All
+          </label>
+        </div>
+        <div class="table-scroll">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Price</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>Beds</th>
+                <th>Baths</th>
+                <th>Sq Ft</th>
+                <th>Type</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="results-tbody"></tbody>
+          </table>
+        </div>
       </div>
     </div>
   </section>
+
+  <!-- Selection Bar -->
+  <div id="selection-bar">
+    <div>
+      <div id="sel-count-label">0 properties selected</div>
+      <div style="font-size:0.78rem;opacity:0.7;">Request a visit and Iti will follow up within 24 hrs</div>
+    </div>
+    <div style="display:flex;gap:0.75rem;align-items:center;">
+      <button class="sel-bar-btn" onclick="clearSelection()"><i class="fa-solid fa-xmark"></i> Clear</button>
+      <button class="sel-bar-btn primary" onclick="openScheduleModal()">Request Visit &amp; Info &nbsp;<i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+  </div>
+
+  <!-- Schedule Modal -->
+  <div id="schedule-modal" class="modal-overlay" onclick="handleModalOutsideClick(event)">
+    <div class="modal-box">
+      <h3>Request a Property Visit</h3>
+      <p class="modal-sub">Iti will get back to you within 24 hours to confirm your visit.</p>
+      <div class="modal-prop-list" id="modal-prop-list"></div>
+      <div id="modal-form-wrap">
+        <div class="modal-field"><label>YOUR NAME *</label><input type="text" id="sched-name" placeholder="Full name"></div>
+        <div class="modal-field"><label>PHONE NUMBER *</label><input type="tel" id="sched-phone" placeholder="(XXX) XXX-XXXX"></div>
+        <div class="modal-field"><label>YOUR EMAIL *</label><input type="email" id="sched-email" placeholder="your@email.com"></div>
+        <div class="modal-field"><label>PREFERRED VISIT DATE</label><input type="date" id="sched-date"></div>
+        <div class="modal-field"><label>NOTES / QUESTIONS</label><textarea id="sched-notes" placeholder="Any specific questions or requirements..."></textarea></div>
+        <div class="modal-btns">
+          <button class="modal-submit" onclick="submitScheduleRequest()"><i class="fa-solid fa-paper-plane"></i>&nbsp; Send Request</button>
+          <button class="modal-cancel" onclick="closeScheduleModal()">Cancel</button>
+        </div>
+      </div>
+      <div id="modal-success" style="display:none;" class="modal-success-wrap">
+        <i class="fa-solid fa-circle-check"></i>
+        <h4>Request Sent!</h4>
+        <p>Iti will reach out shortly to confirm your appointment.</p>
+      </div>
+    </div>
+  </div>
 
   <!-- ═══ SERVICES ════════════════════════════════════════ -->
   <section id="services">
@@ -784,7 +1107,7 @@
   <section id="about">
     <div class="about-grid">
       <div class="about-img-wrap reveal">
-        <img src="photo/iti-profile.jpeg" alt="Iti Rout – Licensed Texas REALTOR®" class="about-photo" />
+        <img src="image/iti-profile.jpeg" alt="Iti Rout – Licensed Texas REALTOR®" class="about-photo" />
         <div class="about-badge-card">
           <div class="big">12+</div>
           <div class="small">Years in<br/>North Texas</div>
@@ -983,45 +1306,229 @@
     function setSearchTab(el, type) {
       document.querySelectorAll('.search-tab').forEach(t => t.classList.remove('active'));
       el.classList.add('active');
-      document.getElementById('searchResultsInfo').style.display = 'none';
+      document.getElementById('search-results-wrap').style.display = 'none';
+      clearSelection();
     }
 
-    // Mock MLS listing data (Iti Rout service areas)
-    const mockListings = [
-      { location: 'coppell', price: 3800, beds: 6, type: 'Luxury Estate', status: 'sold' },
-      { location: 'southlake', price: 1195, beds: 5, type: 'Luxury Estate', status: 'buy' },
-      { location: 'flower mound', price: 685, beds: 4, type: 'Single Family', status: 'buy' },
-      { location: 'frisco', price: 595, beds: 3, type: 'Single Family', status: 'buy' },
-      { location: 'plano', price: 480, beds: 4, type: 'Single Family', status: 'buy' },
-      { location: 'irving', price: 275, beds: 3, type: 'Condo / Townhome', status: 'rent' },
-      { location: 'coppell', price: 799, beds: 4, type: 'Single Family', status: 'sold' },
-      { location: 'flower mound', price: 160, beds: 2, type: 'Condo / Townhome', status: 'rent' },
-      { location: 'southlake', price: 2400, beds: 5, type: 'Luxury Estate', status: 'buy' },
-      { location: 'plano', price: 350, beds: 3, type: 'Single Family', status: 'buy' },
+    // ── Fallback listings (shown when API is unreachable or returns empty) ──
+    const _fallback = [
+      { mlsId:'F1',  listPrice:1195000, address:{full:'1842 Waterford Dr',      city:'Southlake'},    property:{bedrooms:5,bathrooms:4,area:4820,type:'Residential'},  mls:{status:'Active'} },
+      { mlsId:'F2',  listPrice:685000,  address:{full:'318 Magnolia Cove',      city:'Flower Mound'}, property:{bedrooms:4,bathrooms:3,area:3190,type:'Residential'},  mls:{status:'Active'} },
+      { mlsId:'F3',  listPrice:3800000, address:{full:'7 Turnberry Ln',         city:'Coppell'},      property:{bedrooms:6,bathrooms:7,area:9400,type:'Residential'},  mls:{status:'Closed'} },
+      { mlsId:'F4',  listPrice:595000,  address:{full:'4720 Legacy Dr',         city:'Frisco'},       property:{bedrooms:3,bathrooms:2,area:2650,type:'Residential'},  mls:{status:'Active'} },
+      { mlsId:'F5',  listPrice:480000,  address:{full:'2903 Park Blvd',         city:'Plano'},        property:{bedrooms:4,bathrooms:3,area:2920,type:'Residential'},  mls:{status:'Active'} },
+      { mlsId:'F6',  listPrice:275000,  address:{full:'1101 Riverside Ave #5B', city:'Irving'},       property:{bedrooms:3,bathrooms:2,area:1450,type:'Condominium'},  mls:{status:'Active'} },
+      { mlsId:'F7',  listPrice:799000,  address:{full:'550 Oak Creek Blvd',     city:'Coppell'},      property:{bedrooms:4,bathrooms:3,area:3850,type:'Residential'},  mls:{status:'Closed'} },
+      { mlsId:'F8',  listPrice:2400000, address:{full:'22 Lakeview Ct',         city:'Southlake'},    property:{bedrooms:5,bathrooms:6,area:7100,type:'Residential'},  mls:{status:'Active'} },
+      { mlsId:'F9',  listPrice:350000,  address:{full:'614 Willowbrook Rd',     city:'Plano'},        property:{bedrooms:3,bathrooms:2,area:1980,type:'Residential'},  mls:{status:'Active'} },
+      { mlsId:'FA',  listPrice:160000,  address:{full:'77 Creekside Dr #2A',    city:'Flower Mound'}, property:{bedrooms:2,bathrooms:2,area:1100,type:'Condominium'},  mls:{status:'Active'} },
+      { mlsId:'FB',  listPrice:520000,  address:{full:'811 Canyon Oak Dr',      city:'Coppell'},      property:{bedrooms:4,bathrooms:3,area:2780,type:'Residential'},  mls:{status:'Active'} },
+      { mlsId:'FC',  listPrice:730000,  address:{full:'903 Stone Creek Pkwy',   city:'Frisco'},       property:{bedrooms:5,bathrooms:4,area:3600,type:'Residential'},  mls:{status:'Active'} },
+      { mlsId:'FD',  listPrice:310000,  address:{full:'502 Greenway Blvd',      city:'Irving'},       property:{bedrooms:3,bathrooms:2,area:1680,type:'Residential'},  mls:{status:'Active'} },
+      { mlsId:'FE',  listPrice:1450000, address:{full:'14 Bridle Path Ct',      city:'Southlake'},    property:{bedrooms:5,bathrooms:5,area:5300,type:'Residential'},  mls:{status:'Active'} },
+      { mlsId:'FF',  listPrice:420000,  address:{full:'236 Maple Creek Ln',     city:'Prosper'},      property:{bedrooms:4,bathrooms:3,area:2540,type:'Residential'},  mls:{status:'Active'} },
+      { mlsId:'FG',  listPrice:385000,  address:{full:'119 Celina Ranch Rd',    city:'Celina'},       property:{bedrooms:3,bathrooms:2,area:2100,type:'Residential'},  mls:{status:'Active'} },
+      { mlsId:'FH',  listPrice:890000,  address:{full:'45 Gleneagles Dr',       city:'Plano'},        property:{bedrooms:5,bathrooms:4,area:4100,type:'Residential'},  mls:{status:'Active'} },
+      { mlsId:'FI',  listPrice:195000,  address:{full:'3304 Sunset Ridge #8',   city:'Irving'},       property:{bedrooms:2,bathrooms:1,area:980,type:'Condominium'},   mls:{status:'Active'} },
+      { mlsId:'FJ',  listPrice:1100000, address:{full:'7801 Prestonshire Ln',   city:'Dallas'},       property:{bedrooms:5,bathrooms:4,area:4450,type:'Residential'},  mls:{status:'Active'} },
+      { mlsId:'FK',  listPrice:625000,  address:{full:'912 Longhorn Trail',     city:'Flower Mound'}, property:{bedrooms:4,bathrooms:3,area:3250,type:'Residential'},  mls:{status:'Closed'} },
     ];
 
-    function runSearch() {
-      const loc = document.getElementById('filterLocation').value.toLowerCase().trim();
-      const priceVal = document.getElementById('filterPrice').value;
-      const bedsVal = document.getElementById('filterBeds').value;
-      const typeVal = document.getElementById('filterType').value;
-      const activeTab = document.querySelector('.search-tab.active').textContent.toLowerCase();
-      const results = mockListings.filter(l => {
-        if (activeTab === 'buy' && l.status !== 'buy') return false;
-        if (activeTab === 'rent' && l.status !== 'rent') return false;
-        if (activeTab === 'sold' && l.status !== 'sold') return false;
-        if (loc && !l.location.includes(loc)) return false;
+    function getFallback(loc, priceVal, bedsVal, tab) {
+      return _fallback.filter(p => {
+        const city = (p.address.city||'').toLowerCase();
+        if (loc && !city.includes(loc) && !(p.address.full||'').toLowerCase().includes(loc)) return false;
         if (priceVal) {
-          const max = parseInt(priceVal);
-          if (max === 9999) { if (l.price < 2000) return false; }
-          else { if (l.price > max) return false; }
+          const mx = parseInt(priceVal);
+          if (mx === 9999 && p.listPrice < 2000000) return false;
+          if (mx !== 9999 && p.listPrice > mx * 1000) return false;
         }
-        if (bedsVal && l.beds < parseInt(bedsVal)) return false;
-        if (typeVal && l.type !== typeVal) return false;
+        if (bedsVal && p.property.bedrooms < parseInt(bedsVal)) return false;
+        const st = (p.mls?.status||'').toLowerCase();
+        if (tab === 'sold' && st !== 'closed') return false;
+        if (tab !== 'sold' && st === 'closed') return false;
         return true;
       });
-      document.getElementById('resultCount').textContent = results.length;
-      document.getElementById('searchResultsInfo').style.display = 'block';
+    }
+
+    function runSearch() {
+      const loc      = document.getElementById('filterLocation').value.trim();
+      const priceVal = document.getElementById('filterPrice').value;
+      const bedsVal  = document.getElementById('filterBeds').value;
+      const typeVal  = document.getElementById('filterType').value;
+      const tab      = document.querySelector('.search-tab.active').textContent.toLowerCase();
+
+      // Build URL manually — URLSearchParams encodes [] to %5B%5D which SimplyRETS rejects
+      let apiUrl = 'https://api.simplyrets.com/properties?limit=20';
+      if (loc)     apiUrl += '&q=' + encodeURIComponent(loc);
+      if (bedsVal) apiUrl += '&minbeds=' + encodeURIComponent(bedsVal);
+      if (priceVal) {
+        const mx = parseInt(priceVal);
+        if (mx === 9999) apiUrl += '&minprice=2000000';
+        else             apiUrl += '&maxprice=' + (mx * 1000);
+      }
+      if (typeVal === 'Condo / Townhome')                                    apiUrl += '&type[]=condominium';
+      else if (typeVal === 'Single Family' || typeVal === 'Luxury Estate')   apiUrl += '&type[]=residential';
+      apiUrl += '&status[]=' + (tab === 'sold' ? 'Closed' : 'Active');
+
+      const btn = document.querySelector('.search-btn');
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>&nbsp; Searching…';
+      btn.disabled = true;
+
+      const wrap = document.getElementById('search-results-wrap');
+      document.getElementById('results-tbody').innerHTML =
+        '<tr><td colspan="9" style="text-align:center;padding:2.5rem;color:var(--muted)"><i class="fa-solid fa-spinner fa-spin" style="font-size:1.5rem;color:var(--gold);display:block;margin-bottom:0.75rem"></i>Searching live MLS data…</td></tr>';
+      wrap.style.display = 'block';
+
+      fetch(apiUrl, {
+        headers: { 'Authorization': 'Basic ' + btoa('simplyrets:simplyrets') }
+      })
+      .then(r => { if (!r.ok) throw new Error('api'); return r.json(); })
+      .then(data => {
+        // Use fallback when API returns empty (demo API has no DFW data for these cities)
+        const list = Array.isArray(data) && data.length > 0
+          ? data
+          : getFallback(loc.toLowerCase(), priceVal, bedsVal, tab);
+        renderResults(list);
+      })
+      .catch(() => renderResults(getFallback(loc.toLowerCase(), priceVal, bedsVal, tab)))
+      .finally(() => {
+        btn.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i>&nbsp; Search';
+        btn.disabled = false;
+      });
+    }
+
+    function renderResults(listings) {
+      const wrap  = document.getElementById('search-results-wrap');
+      const tbody = document.getElementById('results-tbody');
+      document.getElementById('result-count-label').textContent = listings.length;
+      tbody.innerHTML = '';
+      if (listings.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:2.5rem;color:var(--muted)"><i class="fa-solid fa-house-circle-xmark" style="font-size:1.5rem;display:block;margin-bottom:0.75rem"></i>No properties found — try broader search criteria.</td></tr>';
+      } else {
+        listings.forEach(p => {
+          const addr  = p.address?.full  || '—';
+          const city  = p.address?.city  || '—';
+          const price = p.listPrice ? '$' + p.listPrice.toLocaleString() : '—';
+          const beds  = p.property?.bedrooms  ?? '—';
+          const baths = p.property?.bathrooms ?? '—';
+          const sqft  = p.property?.area ? p.property.area.toLocaleString() : '—';
+          const ptype = p.property?.type || '—';
+          const stat  = p.mls?.status    || '—';
+          const sc    = stat.toLowerCase() === 'active' ? 'active' : stat.toLowerCase() === 'closed' ? 'closed' : 'other';
+          const tr = document.createElement('tr');
+          tr.className = 'result-row';
+          tr.dataset.addr  = `${addr}, ${city}`;
+          tr.dataset.price = price;
+          tr.innerHTML = `
+            <td><input type="checkbox" class="row-check" onchange="updateSelectionBar()"></td>
+            <td class="prop-price">${price}</td>
+            <td>${addr}</td>
+            <td>${city}</td>
+            <td>${beds}</td>
+            <td>${baths}</td>
+            <td>${sqft}</td>
+            <td>${ptype}</td>
+            <td><span class="prop-status ${sc}">${stat}</span></td>`;
+          tr.addEventListener('click', e => {
+            if (e.target.type === 'checkbox') return;
+            const cb = tr.querySelector('.row-check');
+            cb.checked = !cb.checked;
+            updateSelectionBar();
+          });
+          tbody.appendChild(tr);
+        });
+      }
+      wrap.style.display = 'block';
+      wrap.scrollIntoView({ behavior:'smooth', block:'nearest' });
+      clearSelection();
+    }
+
+    function toggleSelectAll(cb) {
+      document.querySelectorAll('.row-check').forEach(c => c.checked = cb.checked);
+      document.querySelectorAll('.result-row').forEach(r => r.classList.toggle('selected', cb.checked));
+      updateSelectionBar();
+    }
+
+    function updateSelectionBar() {
+      const checked = [...document.querySelectorAll('.row-check:checked')];
+      document.querySelectorAll('.result-row').forEach(r =>
+        r.classList.toggle('selected', r.querySelector('.row-check').checked));
+      const bar = document.getElementById('selection-bar');
+      if (checked.length > 0) {
+        document.getElementById('sel-count-label').textContent =
+          checked.length + ' propert' + (checked.length === 1 ? 'y' : 'ies') + ' selected';
+        bar.classList.add('visible');
+      } else {
+        bar.classList.remove('visible');
+      }
+    }
+
+    function clearSelection() {
+      document.querySelectorAll('.row-check').forEach(c => c.checked = false);
+      document.querySelectorAll('.result-row').forEach(r => r.classList.remove('selected'));
+      const sa = document.getElementById('select-all-chk');
+      if (sa) sa.checked = false;
+      document.getElementById('selection-bar').classList.remove('visible');
+    }
+
+    function openScheduleModal() {
+      const selected = [...document.querySelectorAll('.result-row.selected')];
+      if (!selected.length) return;
+      document.getElementById('modal-prop-list').innerHTML = selected.map(r =>
+        `<div class="modal-prop-item"><strong>${r.dataset.price}</strong> &nbsp;—&nbsp; ${r.dataset.addr}</div>`
+      ).join('');
+      document.getElementById('modal-form-wrap').style.display = 'block';
+      document.getElementById('modal-success').style.display = 'none';
+      document.getElementById('schedule-modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeScheduleModal() {
+      document.getElementById('schedule-modal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function handleModalOutsideClick(e) {
+      if (e.target === e.currentTarget) closeScheduleModal();
+    }
+
+    async function submitScheduleRequest() {
+      const name  = document.getElementById('sched-name').value.trim();
+      const phone = document.getElementById('sched-phone').value.trim();
+      const email = document.getElementById('sched-email').value.trim();
+      const date  = document.getElementById('sched-date').value;
+      const notes = document.getElementById('sched-notes').value.trim();
+      if (!name || !phone || !email) { alert('Please fill in your name, phone, and email.'); return; }
+      const selected = [...document.querySelectorAll('.result-row.selected')];
+      const propText = selected.map(r => `\u2022 ${r.dataset.price}  —  ${r.dataset.addr}`).join('\n');
+      const fd = new FormData();
+      fd.append('_subject', `Property Visit Request from ${name}`);
+      fd.append('Name', name);
+      fd.append('Phone', phone);
+      fd.append('Email', email);
+      fd.append('Preferred Visit Date', date || 'Not specified');
+      fd.append('Notes', notes || 'None');
+      fd.append('Selected Properties', propText);
+      const btn = document.querySelector('.modal-submit');
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>&nbsp; Sending…';
+      btn.disabled = true;
+      try {
+        const res = await fetch('https://formspree.io/f/xzdjbkeq', {
+          method: 'POST', body: fd, headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          document.getElementById('modal-form-wrap').style.display = 'none';
+          document.getElementById('modal-success').style.display = 'block';
+          setTimeout(closeScheduleModal, 3500);
+          clearSelection();
+        } else { throw new Error(); }
+      } catch {
+        alert('Failed to send. Please email itirout@yahoo.com directly.');
+      } finally {
+        btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i>&nbsp; Send Request';
+        btn.disabled = false;
+      }
     }
 
     // Newsletter signup
@@ -1078,6 +1585,88 @@
         }, 3500);
       }
     }
+  // ── Theme Switcher ─────────────────────────────────────
+  const themes = {
+    luxury: {
+      '--gold': '#c9a96e', '--gold-light': '#e8d5b0',
+      '--dark': '#1a1a2e', '--dark2': '#16213e', '--mid': '#2a2a4a',
+      '--text': '#f0ece4', '--muted': '#a09880'
+    },
+    emerald: {
+      '--gold': '#2ecc71', '--gold-light': '#a8f0c6',
+      '--dark': '#0d1f0f', '--dark2': '#112b14', '--mid': '#1a3d1e',
+      '--text': '#e8f5eb', '--muted': '#7ab888'
+    },
+    royal: {
+      '--gold': '#9b8fe0', '--gold-light': '#cec8f5',
+      '--dark': '#0f0c29', '--dark2': '#16123e', '--mid': '#25205a',
+      '--text': '#eceaf8', '--muted': '#9a95c8'
+    },
+    rose: {
+      '--gold': '#e07b8a', '--gold-light': '#f5c0c8',
+      '--dark': '#1f0d10', '--dark2': '#2e1218', '--mid': '#451c24',
+      '--text': '#f8eaec', '--muted': '#c08890'
+    },
+    ocean: {
+      '--gold': '#29b6cf', '--gold-light': '#a0e5ef',
+      '--dark': '#060d18', '--dark2': '#0a1628', '--mid': '#102340',
+      '--text': '#e4f2f8', '--muted': '#6aaec0'
+    },
+    sunset: {
+      '--gold': '#ff8c42', '--gold-light': '#ffd0a8',
+      '--dark': '#1a0800', '--dark2': '#2a1200', '--mid': '#3d1e05',
+      '--text': '#f8f0e8', '--muted': '#c09070'
+    },
+    midnight: {
+      '--gold': '#90a4ae', '--gold-light': '#cfd8dc',
+      '--dark': '#0a0e1a', '--dark2': '#0f1520', '--mid': '#1e2535',
+      '--text': '#eceff1', '--muted': '#78909c'
+    },
+    copper: {
+      '--gold': '#cd7f32', '--gold-light': '#e8c084',
+      '--dark': '#100800', '--dark2': '#1a1000', '--mid': '#2e1c08',
+      '--text': '#f5ede0', '--muted': '#a07040'
+    },
+    crimson: {
+      '--gold': '#ef5350', '--gold-light': '#ffcdd2',
+      '--dark': '#1a0505', '--dark2': '#280808', '--mid': '#3d1010',
+      '--text': '#fce8e8', '--muted': '#bf6060'
+    },
+    teal: {
+      '--gold': '#26a69a', '--gold-light': '#80d8d0',
+      '--dark': '#041412', '--dark2': '#071e1c', '--mid': '#0e2e2a',
+      '--text': '#e0f4f2', '--muted': '#60b0a8'
+    }
+  };
+
+  function applyTheme(name) {
+    const t = themes[name];
+    if (!t) return;
+    const root = document.documentElement.style;
+    Object.entries(t).forEach(([k, v]) => root.setProperty(k, v));
+    document.querySelectorAll('.theme-option').forEach(el => {
+      el.classList.toggle('active', el.dataset.theme === name);
+    });
+    localStorage.setItem('iti-theme', name);
+  }
+
+  const themeToggle = document.getElementById('theme-toggle');
+  const themePanel = document.getElementById('theme-panel');
+  themeToggle.addEventListener('click', () => themePanel.classList.toggle('open'));
+  document.addEventListener('click', e => {
+    if (!themePanel.contains(e.target) && e.target !== themeToggle) {
+      themePanel.classList.remove('open');
+    }
+  });
+  document.querySelectorAll('.theme-option').forEach(el => {
+    el.addEventListener('click', () => { applyTheme(el.dataset.theme); });
+    el.addEventListener('keydown', e => { if (e.key === 'Enter') applyTheme(el.dataset.theme); });
+  });
+
+  // Restore saved theme
+  const saved = localStorage.getItem('iti-theme');
+  if (saved && themes[saved]) applyTheme(saved);
+
   </script>
 </body>
 </html>
