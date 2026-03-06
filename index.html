@@ -861,7 +861,18 @@
       <div class="contact-info reveal">
         <div class="contact-item">
           <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
-          <div><strong>Mobile</strong><span>(214) 909-3381</span></div>
+          <div>
+            <strong>Mobile</strong>
+            <span style="display:flex; align-items:center; gap:0.6rem;">
+              (214) 909-3381
+              <a href="https://wa.me/12149093381" target="_blank" rel="noopener noreferrer" title="Message on WhatsApp"
+                style="display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; background:#25d366; border-radius:50%; color:#fff; font-size:0.95rem; flex-shrink:0; transition:transform 0.2s, box-shadow 0.2s;"
+                onmouseover="this.style.transform='scale(1.12)';this.style.boxShadow='0 4px 14px rgba(37,211,102,0.5)'"
+                onmouseout="this.style.transform='';this.style.boxShadow=''">
+                <i class="fa-brands fa-whatsapp"></i>
+              </a>
+            </span>
+          </div>
         </div>
         <div class="contact-item">
           <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
@@ -876,14 +887,14 @@
           <div><strong>Hours</strong><span>Mon–Sat: 8 AM – 7 PM<br/>Sunday: By appointment</span></div>
         </div>
       </div>
-      <form onsubmit="handleSubmit(event)" class="reveal">
+      <form id="contactForm" onsubmit="handleSubmit(event)" class="reveal">
         <div class="form-row">
-          <input type="text" placeholder="First Name" required autocomplete="given-name" />
-          <input type="text" placeholder="Last Name" required autocomplete="family-name" />
+          <input type="text" name="firstName" placeholder="First Name" required autocomplete="given-name" />
+          <input type="text" name="lastName" placeholder="Last Name" required autocomplete="family-name" />
         </div>
-        <input type="email" placeholder="Email Address" required autocomplete="email" />
-        <input type="tel" placeholder="Phone Number" autocomplete="tel" />
-        <select>
+        <input type="email" name="email" placeholder="Email Address" required autocomplete="email" />
+        <input type="tel" name="phone" placeholder="Phone Number" autocomplete="tel" />
+        <select name="interest">
           <option value="" disabled selected>I'm interested in...</option>
           <option>Buying a Home</option>
           <option>Selling a Home</option>
@@ -891,7 +902,7 @@
           <option>Market Analysis</option>
           <option>Other</option>
         </select>
-        <textarea placeholder="Tell me a little about what you're looking for..."></textarea>
+        <textarea name="message" placeholder="Tell me a little about what you're looking for..."></textarea>
         <button type="submit" class="form-submit">Send Message &nbsp;<i class="fa-solid fa-paper-plane"></i></button>
       </form>
     </div>
@@ -1017,19 +1028,44 @@
       }, 3000);
     }
 
-    // Contact form
-    function handleSubmit(e) {
+    // Contact form — posts to Formspree → forwards to itirout@yahoo.com
+    async function handleSubmit(e) {
       e.preventDefault();
-      const btn = e.target.querySelector('.form-submit');
-      btn.textContent = '✓ Message Sent!';
-      btn.style.background = '#4ade80';
-      btn.style.color = '#1a1a2e';
-      setTimeout(() => {
-        btn.innerHTML = 'Send Message &nbsp;<i class="fa-solid fa-paper-plane"></i>';
-        btn.style.background = '';
-        btn.style.color = '';
-        e.target.reset();
-      }, 3000);
+      const form = e.target;
+      const btn = form.querySelector('.form-submit');
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>&nbsp; Sending...';
+      btn.disabled = true;
+      try {
+        const res = await fetch('https://formspree.io/f/xzdjbkeq', {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          btn.innerHTML = '&#10003; Message Sent!';
+          btn.style.background = '#4ade80';
+          btn.style.color = '#1a1a2e';
+          form.reset();
+          setTimeout(() => {
+            btn.innerHTML = 'Send Message &nbsp;<i class="fa-solid fa-paper-plane"></i>';
+            btn.style.background = '';
+            btn.style.color = '';
+            btn.disabled = false;
+          }, 3500);
+        } else {
+          throw new Error('server error');
+        }
+      } catch {
+        btn.innerHTML = '&#10007; Failed — Try Again';
+        btn.style.background = '#ef4444';
+        btn.style.color = '#fff';
+        btn.disabled = false;
+        setTimeout(() => {
+          btn.innerHTML = 'Send Message &nbsp;<i class="fa-solid fa-paper-plane"></i>';
+          btn.style.background = '';
+          btn.style.color = '';
+        }, 3500);
+      }
     }
   </script>
 </body>
